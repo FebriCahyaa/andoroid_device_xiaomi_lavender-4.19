@@ -31,6 +31,9 @@ DEVICE_PATH := device/xiaomi/lavender
 TARGET_SCREEN_HEIGHT := 2340
 TARGET_SCREEN_WIDTH := 1080
 
+# Display
+TARGET_SCREEN_DENSITY := 440
+
 # Kernel
 TARGET_KERNEL_CONFIG := lavender_defconfig
 
