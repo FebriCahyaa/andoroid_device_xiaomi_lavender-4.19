@@ -27,6 +27,10 @@
 
 DEVICE_PATH := device/xiaomi/lavender
 
+# Boot animation
+TARGET_SCREEN_HEIGHT := 2340
+TARGET_SCREEN_WIDTH := 1080
+
 # Kernel
 TARGET_KERNEL_CONFIG := lavender_defconfig
 
