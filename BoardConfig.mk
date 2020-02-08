@@ -30,6 +30,9 @@ DEVICE_PATH := device/xiaomi/lavender
 # Kernel
 TARGET_KERNEL_CONFIG := lavender_defconfig
 
+# Recovery
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.qcom
+
 # Security patch level
 VENDOR_SECURITY_PATCH := 2018-11-01
 
