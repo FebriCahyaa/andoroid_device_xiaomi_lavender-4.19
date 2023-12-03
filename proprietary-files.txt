@@ -1,3 +1,9 @@
+# ADSP modules
+vendor/lib/rfsa/adsp/nuance.scd
+
+# Audio
+vendor/firmware/voice_amodel.bin
+
 # Audio ACDB
 vendor/etc/acdbdata/MTP/MTP_Bluetooth_cal.acdb
 vendor/etc/acdbdata/MTP/MTP_General_cal.acdb
@@ -1011,5 +1017,68 @@ vendor/lib64/vendor.qti.hardware.fingerprint@1.0.so
 vendor/lib/hw/gatekeeper.sdm660.so
 vendor/lib64/hw/gatekeeper.sdm660.so
 
+# Graphics Firmware - from lavender QKQ1.190910.002 V12.5.7.0.QFGCNXM
+vendor/firmware/a512_zap.b00|85a7fc0008f9a2071d8b3d0cc212b19141633267
+vendor/firmware/a512_zap.b01|464ebf5699e2b1d190f2bcb6ce179fa05a16c863
+vendor/firmware/a512_zap.b02|33cc074ca840ae59f310a0e217aa7409afb30ac2
+vendor/firmware/a512_zap.elf|e5fbc85d19203f38975f421c2c2a0fde9c98109e
+vendor/firmware/a512_zap.mdt|18647b5f31c016ddbb1dd2b345f179875df0acc2
+vendor/firmware/a530_gpmu.fw2|706da8d5ee565dcf456341f805ee75a40773f65a
+vendor/firmware/a530_pfp.fw|c19e1905c15622d7bb02409e6748959bceda9b08
+vendor/firmware/a530_pm4.fw|b1cf625b5552b99839687f479c124ac5daca2ca2
+vendor/firmware/a530v1_pfp.fw|0864291b99bed712edfcffa94be7b4595d3af306
+vendor/firmware/a530v1_pm4.fw|6a82a4fb4035fa2a933c1a26b5535d7ec7c0ac4c
+vendor/firmware/a530v2_seq.fw2|63b6d25594a5c1f4217d996a2b636e17a29fc840
+vendor/firmware/a530v3_gpmu.fw2|0a2f6f450231673d75ba39e5d28776db3becf810
+vendor/firmware/a530v3_seq.fw2|8963a53acc689725dee4b22881a4dd4b80e5def8
+vendor/firmware/a540_gpmu.fw2|3530f10b4825a3b08c79e0bcfaf6471ec8422f24
+
+# Keymaster - from Honeywell/hon660/hon660:12/94.00.03/0037:user/release-keys
+vendor/bin/hw/android.hardware.keymaster@3.0-service-qti|6fdf7c3033c2738eeecb33f6a625526873c6c325
+vendor/bin/hw/android.hardware.keymaster@4.0-service-qti|53df18bdec6e2641368407c1ef5aa99899d7a23f
+# vendor/etc/init/android.hardware.keymaster@3.0-service-qti.rc|573b7392c8997008204081165cfe81a11080745d
+# vendor/etc/init/android.hardware.keymaster@4.0-service-qti.rc|c8999fb1bccbef81e6b362059e9a6ebd023de98f
+vendor/lib/hw/android.hardware.keymaster@3.0-impl-qti.so|a4939ac6fa1be764110d573cdeb49f14eed80f44
+vendor/lib/libkeymasterdeviceutils.so|1c176ef4f147fd39704304421cafd2d08766ff58
+vendor/lib/libkeymasterprovision.so|dbc51c3e002ab139a6c6c4932a024a7404d8bed5
+vendor/lib/libkeymasterutils.so|827dd23eac41006c510d77fa0833d2f91eddb845
+vendor/lib/libqcbor.so|1332c20f669eeeb3b99b2f0907f3e5ec13817477
+vendor/lib/libqtikeymaster4.so|4083c9a24e5a6379efadbf73bd43778c17442a4b
+vendor/lib64/hw/android.hardware.keymaster@3.0-impl-qti.so|122c6f34831b3e2f32e0b3140e1044fba3619bfc
+vendor/lib64/libkeymasterdeviceutils.so|2fd608b63b1fb2ef6b940378c3319f1e85960a76
+vendor/lib64/libkeymasterprovision.so|644aaee0573b5d0edba6fe5a193de4e0d67deb28
+vendor/lib64/libkeymasterutils.so|40a8cbd82dcf8496db39511f4d6f2e93b63de439
+vendor/lib64/libqcbor.so|dc6b0d7ac44d7a8de35403cc92ee4417b154db5d
+vendor/lib64/libqtikeymaster4.so|0df7c63aa868c62956a03bce096bb5bfee0c811e
+
 # Keymaster - from Honeywell/hon660/hon660:12/94.00.03/0037:user/release-keys
 vendor/etc/init/android.hardware.keymaster@4.0-service-qti.rc|c8999fb1bccbef81e6b362059e9a6ebd023de98f
+
+# Keystore
+vendor/lib/hw/keystore.sdm660.so
+vendor/lib64/hw/keystore.sdm660.so
+
+# Sensors - from Honeywell/hon660/hon660:12/94.00.03/0037:user/release-keys
+-system_ext/framework/vendor.qti.hardware.sensorscalibrate-V1.0-java.jar|476196a495be445ab56745461e08c5f95cce0da6
+system_ext/lib/vendor.qti.hardware.sensorscalibrate@1.0.so|7c3431524dcc03b1bf011cdddfa428b1a58a0617
+system_ext/lib64/vendor.qti.hardware.sensorscalibrate@1.0.so|6e5297465a8391eba19476fd582165d53f0d132c
+vendor/bin/sensors.qti|5a036a4eaae482dd52e0535df68f9c5c5ffe274a
+vendor/lib/libsensor1.so|32b0239dac99701a96c361b6871bdd7a1f8cc29f
+vendor/lib/libsensor_reg.so|287a4774e7861f884c78ebcf4174bb04ca94aff6
+vendor/lib/libssc_default_listener.so|21a5b946f78605a1e5d49b34e79a69f3aeb350dd
+vendor/lib/sensor_calibrate.so|37be808f1ef472e24cdc5836ce6d68e7720131f6
+vendor/lib/sensors.ssc.so|786eccadc9e1f29568c58575ef61e760a41a499b
+vendor/lib64/libsensor1.so|821460aa9e9b4004f83917d699f562b4578c37cd
+vendor/lib64/libsensor_reg.so|60d6e47b01d2c097ec7ffab08f01333083f72c53
+vendor/lib64/libssc_default_listener.so|2c242c49c601088e3a403ab56c60b841938811c8
+vendor/lib64/sensor_calibrate.so|f3e7652f8821710ffc301c8e6f886a76d0a036b0
+vendor/lib64/sensors.ssc.so|214263957659adc0a9e5069d0b50245c850600dd
+
+# Thermal - from Honeywell/hon660/hon660:12/94.00.03/0037:user/release-keys
+vendor/bin/thermal-engine|d58d0a84373658e230032d437e35e3bf3db92c8c
+vendor/etc/init/init_thermal-engine.rc|a0310f09da9f09c67e110607b73aec9f9f981c4c
+-vendor/lib/libthermalclient.so|2225ccc5e21c889778591a5d42774ab54a54de88
+-vendor/lib64/libthermalclient.so|40978729e458ec49fabf457375e90ceb081d1ad8
+
+# Wifi - from Honeywell/hon660/hon660:12/94.00.03/0037:user/release-keys
+vendor/bin/cnss-daemon|60f5ddae32675b6f4587f5fc07c1cf0d23fa8611
