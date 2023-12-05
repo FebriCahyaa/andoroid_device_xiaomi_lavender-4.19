@@ -26,25 +26,20 @@
 # Inherit from sdm660-common
 include device/xiaomi/sdm660-common/BoardConfigCommon.mk
 
-DEVICE_PATH := device/xiaomi/tulip
+DEVICE_PATH := device/xiaomi/lavender
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := tulip,twolip
+TARGET_OTA_ASSERT_DEVICE := lavender,
 
 # Boot animation
-TARGET_SCREEN_HEIGHT := 2160
+TARGET_SCREEN_HEIGHT := 2340
 TARGET_SCREEN_WIDTH := 1080
 
 # Display
 TARGET_SCREEN_DENSITY := 440
 
 # Kernel
-TARGET_KERNEL_CONFIG += vendor/bouquet_defconfig vendor/tulip.config
-TARGET_KERNEL_CLANG_VERSION := prelude
-TARGET_KERNEL_CLANG_AOSP := false
-KERNEL_TOOLCHAIN := $(shell pwd)/prebuilts/clang/host/linux-x86/clang-prelude/bin
-TARGET_KERNEL_ADDITIONAL_FLAGS += LD=$(shell pwd)/prebuilts/clang/host/linux-x86/clang-prelude/bin/ld.lld
-TARGET_KERNEL_ADDITIONAL_FLAGS += AR=$(shell pwd)/prebuilts/clang/host/linux-x86/clang-prelude/bin/llvm-ar
+TARGET_KERNEL_CONFIG += lavender_defconfig
 
 # Manifest
 DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/configs/manifest.xml
@@ -54,12 +49,12 @@ BOARD_USES_METADATA_PARTITION := true
 BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
 BOARD_SUPER_PARTITION_METADATA_DEVICE := system
 BOARD_SUPER_PARTITION_BLOCK_DEVICES := system vendor cust
-BOARD_SUPER_PARTITION_SYSTEM_DEVICE_SIZE := 3221225472
+BOARD_SUPER_PARTITION_SYSTEM_DEVICE_SIZE := 3758096384
 BOARD_SUPER_PARTITION_VENDOR_DEVICE_SIZE := 2147483648
 BOARD_SUPER_PARTITION_CUST_DEVICE_SIZE := 872415232
 BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := system vendor system_ext product odm
 BOARD_SUPER_PARTITION_SIZE := $(shell expr $(BOARD_SUPER_PARTITION_VENDOR_DEVICE_SIZE) + $(BOARD_SUPER_PARTITION_CUST_DEVICE_SIZE) + $(BOARD_SUPER_PARTITION_SYSTEM_DEVICE_SIZE))
-BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := $(shell expr $(BOARD_SUPER_PARTITION_SIZE) - 4194304 )
+BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 6773800960 # (BOARD_SUPER_PARTITION_SIZE - 4MB)
 
 BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE := 67108864 # 64 MB
 BOARD_SYSTEM_EXTIMAGE_PARTITION_RESERVED_SIZE := 67108864 # 64 MB
@@ -84,4 +79,4 @@ TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
 VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 
 # Inherit the proprietary files
-include vendor/xiaomi/tulip/BoardConfigVendor.mk
+include vendor/xiaomi/lavender/BoardConfigVendor.mk

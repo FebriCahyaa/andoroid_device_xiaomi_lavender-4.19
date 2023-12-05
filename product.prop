@@ -1,2 +1,4 @@
-# Cutout
-ro.support_hide_display_cutout=true
+# Adaptive Display
+ro.qcom.ad=1
+ro.qcom.ad.calib.data=/system/etc/calib.cfg
+ro.qcom.ad.sensortype=2

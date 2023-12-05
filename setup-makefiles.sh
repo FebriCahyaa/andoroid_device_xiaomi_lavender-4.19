@@ -8,7 +8,7 @@
 
 set -e
 
-export DEVICE=tulip
+export DEVICE=lavender
 export DEVICE_COMMON=sdm660-common
 export VENDOR=xiaomi
 

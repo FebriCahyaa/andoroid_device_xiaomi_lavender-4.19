@@ -24,7 +24,7 @@
 # Inherit from sdm660-common
 $(call inherit-product, device/xiaomi/sdm660-common/sdm660.mk)
 
-DEVICE_PATH := device/xiaomi/tulip
+DEVICE_PATH := device/xiaomi/lavender
 
 # Setup dalvik vm configs
 $(call inherit-product, frameworks/native/build/phone-xhdpi-4096-dalvik-heap.mk)
@@ -49,12 +49,6 @@ BOARD_HAVE_IR := true
 # Dynamic partitions
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/flash_super_dummy.sh:install/bin/flash_super_dummy.sh
-
-# Display calibration
-PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/configs/display/qdcm_calib_data_boe_ft8719_fhdplus_video_mode_dsi_panel.xml:$(TARGET_COPY_OUT_VENDOR)/etc/qdcm_calib_data_boe_ft8719_fhdplus_video_mode_dsi_panel.xml \
-    $(DEVICE_PATH)/configs/display/qdcm_calib_data_shenchao_nt36672a_fhdplus_video_mode_dsi_panel.xml:$(TARGET_COPY_OUT_VENDOR)/etc/qdcm_calib_data_shenchao_nt36672a_fhdplus_video_mode_dsi_panel.xml \
-    $(DEVICE_PATH)/configs/display/qdcm_calib_data_tianma_nt36672a_fhdplus_video_mode_dsi_panel.xml:$(TARGET_COPY_OUT_VENDOR)/etc/qdcm_calib_data_tianma_nt36672a_fhdplus_video_mode_dsi_panel.xml
 
 # FM
 BOARD_HAVE_QCOM_FM := true
@@ -89,7 +83,7 @@ PRODUCT_SOONG_NAMESPACES += \
 
 # Wifi
 PRODUCT_PACKAGES += \
-    TulipWifiOverlay
+    LavenderWifiOverlay
 
 # Inherit the proprietary files
-$(call inherit-product, vendor/xiaomi/tulip/tulip-vendor.mk)
+$(call inherit-product, vendor/xiaomi/lavender/lavender-vendor.mk)
