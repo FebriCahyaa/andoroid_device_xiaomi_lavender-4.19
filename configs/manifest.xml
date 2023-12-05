@@ -23,22 +23,23 @@ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
-<manifest version="2.0" type="device" target-level="3">
+<manifest version="2.0" type="device" target-level="4">
+    <hal format="hidl">
+        <name>vendor.goodix.hardware.fingerprint</name>
+        <transport>hwbinder</transport>
+        <version>1.0</version>
+        <interface>
+            <name>IGoodixBiometricsFingerprint</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
     <hal format="hidl">
         <name>android.hardware.keymaster</name>
         <transport>hwbinder</transport>
-        <fqname>@4.0::IKeymasterDevice/default</fqname>
-    </hal>
-    <hal format="hidl">
-        <name>vendor.goodix.hardware.interfaces.biometrics.fingerprint</name>
-        <transport>hwbinder</transport>
-        <fqname>@2.1::IGoodixFingerprintDaemon/default</fqname>
-    </hal>
-    <hal format="hidl">
-        <name>com.fingerprints.extension</name>
-        <transport>hwbinder</transport>
-        <fqname>@2.0::IFingerprintEngineering/default</fqname>
-        <fqname>@2.0::IFingerprintNavigation/default</fqname>
-        <fqname>@2.0::IFingerprintSensorTest/default</fqname>
+        <version>3.0</version>
+        <interface>
+            <name>IKeymasterDevice</name>
+            <instance>default</instance>
+        </interface>
     </hal>
 </manifest>
