@@ -57,10 +57,10 @@
          The brightness values must be between 0 and 255 and be non-decreasing.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
-        <item>2</item>
-        <item>10</item>
-        <item>18</item>
-        <item>29</item>
+        <item>16</item>
+        <item>20</item>
+        <item>24</item>
+        <item>31</item>
         <item>48</item>
         <item>74</item>
         <item>107</item>
@@ -83,35 +83,25 @@
          The user is forbidden from setting the brightness below this level. -->
     <integer name="config_screenBrightnessSettingMinimum">1</integer>
 
-    <!-- Stability requirements in milliseconds for accepting a new brightness level.  This is used
-         for debouncing the light sensor.  Different constants are used to debounce the light sensor
-         when adapting to brighter or darker environments.  This parameter controls how quickly
-         brightness changes occur in response to an observed change in light level that exceeds the
-         hysteresis threshold. -->
-    <integer name="config_autoBrightnessBrighteningLightDebounce">2000</integer>
-    <integer name="config_autoBrightnessDarkeningLightDebounce">4000</integer>
-    <!-- Fast brightness animation ramp rate in brightness units per second-->
-    <integer translatable="false" name="config_brightness_ramp_rate_fast">180</integer>
-    <!-- Slow brightness animation ramp rate in brightness units per second-->
-    <integer translatable="false" name="config_brightness_ramp_rate_slow">60</integer>
-
     <!-- Vibrator pattern for feedback about a long screen/key press -->
     <integer-array name="config_longPressVibePattern">
         <item>0</item>
-        <item>28</item>
-        <item>10</item>
+        <item>1</item>
+        <item>30</item>
+        <item>31</item>
     </integer-array>
 
     <!-- Vibrator pattern for feedback about touching a virtual key -->
     <integer-array name="config_virtualKeyVibePattern">
         <item>0</item>
-        <item>28</item>
-        <item>8</item>
+        <item>20</item>
+        <item>35</item>
+        <item>50</item>
     </integer-array>
 
     <!-- Vibrator pattern for a very short but reliable vibration for soft keyboard tap -->
     <integer-array name="config_keyboardTapVibePattern">
-        <item>28</item>
+        <item>55</item>
     </integer-array>
 
     <!-- Whether a software navigation bar should be shown. NOTE: in the future this may be
@@ -133,32 +123,27 @@
                 <string ...>M -5,0 L -5,10 L 5,10 L 5,0 Z @dp</string>
          @see https://www.w3.org/TR/SVG/paths.html#PathData
     -->
-    <string translatable="false" name="config_mainBuiltInDisplayCutoutRectApproximation">
-        M 276.86,88
-        H -276.87
-        V 0
-        H 276.86
-        Z
+    <string translatable="false" name="config_mainBuiltInDisplayCutout">
+        M -80,0 L -80,80 L 80,80 L 80,0 Z
     </string>
 
-    <string translatable="false" name="config_mainBuiltInDisplayCutout">
-        M-303,0
-        L303,0
-        C297.996921,0 293.7782,0.963094935 290.461489,2.86688725
-        C287.195202,4.73708323 284.618028,7.69916009 282.998891,11.4451514
-        C282.001636,13.7688979 281.301317,16.4846017 280.925946,19.5138712
-        L279.710193,29.4583864
-        C277.878158,44.3359633 273.46895,56.5314329 266.605824,65.7032324
-        C259.63625,75.0150165 250.375232,81.2583355 238.301733,84.7859506
-        C231.018416,86.9193179 222.676217,88 213.50484,88
-        L-213.50484,88
-        C-228.497268,88 -241.14783,85.1107152 -251.097961,79.4161364
-        C-261.188157,73.6431662 -268.516295,65.2216849 -273.496963,53.6701451
-        C-276.499931,46.704505 -278.589682,38.5573937 -279.710193,29.4583864
-        L-280.925946,19.5138712
-        C-281.542227,14.5584118 -283.010096,10.4932553 -285.301539,7.43038941
-        C-287.553765,4.41791805 -290.81445,2.21735811 -294.730634,1.06948333
-        C-297.156539,0.363960295 -299.941007,0 -303,0
-        Z
-    </string>
+    <!-- Height of the status bar -->
+    <dimen name="status_bar_height_portrait">80px</dimen>
+    <dimen name="status_bar_height_landscape">24dp</dimen>
+    <dimen name="rounded_corner_radius_top">106.0px</dimen>
+    <dimen name="rounded_corner_radius_bottom">108.0px</dimen>
+
+    <!-- List supported color modes. -->
+    <integer-array name="config_availableColorModes">
+        <item>0</item> <!-- COLOR_MODE_NATURAL -->
+        <item>1</item> <!-- COLOR_MODE_BOOSTED -->
+        <item>2</item> <!-- COLOR_MODE_SATURATED -->
+    </integer-array>
+
+    <!-- Whether device has screen with higher aspect ratio -->
+    <bool name="config_haveHigherAspectRatioScreen">true</bool>
+
+    <!-- Whether device has a notch -->
+    <bool name="config_haveNotch">true</bool>
+
 </resources>
