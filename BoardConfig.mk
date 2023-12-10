@@ -252,11 +252,18 @@ OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 PROTOBUF_SUPPORTED := true
 ENABLE_VENDOR_RIL_SERVICE := true
 
+# SELinux
+include device/qcom/sepolicy/SEPolicy.mk
 # Legacy selinux
-include device/qcom/sepolicy-legacy-um/SEPolicy.mk
+include device/sdm660/common/sepolicy/SEPolicy.mk
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/public
 SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
+SELINUX_IGNORE_NEVERALLOWS := true
+BOARD_SEPOLICY_M4DEFS += \
+    hal_perf_default=vendor_hal_perf_default \
+    hal_perf_hwservice=vendor_hal_perf_hwservice \
+    hal_perf_default_exec=vendor_hal_perf_default_exec
 
 # SVELTE
 MALLOC_SVELTE := true
