@@ -1,7 +1,6 @@
 /*
    Copyright (c) 2016, The CyanogenMod Project
    Copyright (c) 2019-2020, The LineageOS Project
-
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are
    met:
@@ -14,7 +13,6 @@
     * Neither the name of The Linux Foundation nor the names of its
       contributors may be used to endorse or promote products derived
       from this software without specific prior written permission.
-
    THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
    WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
@@ -34,12 +32,18 @@
 #include <sys/sysinfo.h>
 #include <unistd.h>
 
+#include <android-base/file.h>
 #include <android-base/properties.h>
+#include <android-base/strings.h>
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #include <sys/_system_properties.h>
 
 #include "vendor_init.h"
 #include "property_service.h"
+
+using android::base::GetProperty;
+using android::base::ReadFileToString;
+using std::string;
 
 char const *heapstartsize;
 char const *heapgrowthlimit;
@@ -92,9 +96,71 @@ void property_override(char const prop[], char const value[], bool add = true)
     }
 }
 
+void set_ro_build_prop(const string &source, const string &prop,
+                       const string &value, bool product = true) {
+    string prop_name;
+
+    if (product)
+        prop_name = "ro.product." + source + prop;
+    else
+        prop_name = "ro." + source + "build." + prop;
+
+    property_override(prop_name.c_str(), value.c_str());
+}
+
+void set_device_props(const string model, const string name, const string marketname,
+        const string mod_device) {
+    // list of partitions to override props
+    string source_partitions[] = { "", "bootimage.", "odm.", "product.",
+                                   "system.", "system_ext.", "vendor." };
+
+    for (const string &source : source_partitions) {
+        set_ro_build_prop(source, "model", model);
+        set_ro_build_prop(source, "name", name);
+        set_ro_build_prop(source, "marketname", marketname);
+    }
+
+    property_override("ro.product.mod_device", mod_device.c_str());
+}
+
+void property_override_dual(char const system_prop[],
+        char const vendor_prop[], char const value[])
+{
+    property_override(system_prop, value);
+    property_override(vendor_prop, value);
+}
+
+void property_override_multifp(char const buildfp[], char const systemfp[],
+        char const bootimagefp[], char const vendorfp[], char const value[]) {
+    property_override(buildfp, value);
+    property_override(systemfp, value);
+    property_override(bootimagefp, value);
+    property_override(vendorfp, value);
+}
+
+
+static void init_setup_model_properties()
+{
+    std::ifstream fin;
+    std::string buf;
+
+    fin.open("/proc/cmdline");
+    while (std::getline(fin, buf, ' '))
+        if (buf.find("androidboot.hwc") != std::string::npos)
+            break;
+    fin.close();
+
+    property_override_dual("ro.product.model", "ro.vendor.product.model",  "Redmi Note 7");
+    set_device_props("Redmi Note 7", "lavender", "Redmi Note 7", "lavender");
+    property_override("vendor.usb.product_string", "Redmi Note 7");
+    property_override("bluetooth.device.default_name", "Redmi Note 7");
+
+}
+
 void vendor_load_properties()
 {
     check_device();
+    init_setup_model_properties();
 
     property_override("dalvik.vm.heapstartsize", heapstartsize);
     property_override("dalvik.vm.heapgrowthlimit", heapgrowthlimit);
@@ -102,4 +168,7 @@ void vendor_load_properties()
     property_override("dalvik.vm.heaptargetutilization", heaptargetutilization);
     property_override("dalvik.vm.heapminfree", heapminfree);
     property_override("dalvik.vm.heapmaxfree", heapmaxfree);
+    // SafetyNet workaround
+    property_override("ro.boot.verifiedbootstate", "green");
+    property_override("ro.oem_unlock_supported", "0");
 }

@@ -1,9 +1,16 @@
-# Charger
-ro.charger.disable_init_blank=true
-ro.charger.enable_suspend=true
 
-# Radio
-ro.telephony.block_binder_thread_on_incoming_calls=false
+# Adaptive Display
+ro.qcom.ad=1
+ro.qcom.ad.calib.data=/system/etc/calib.cfg
+ro.qcom.ad.sensortype=2
 
-# Rendering
-debug.hwui.skia_atrace_enabled=false
+# Camera
+persist.bokeh.switch.lux=290
+persist.flash.low.lux=390
+persist.imx376_sunny.low.lux=310
+persist.imx376_sunny.light.lux=280
+persist.imx376_ofilm.low.lux=310
+persist.imx376_ofilm.light.lux=280
+ro.eyecare.brightness.threshold=3
+ro.eyecare.brightness.level=8
+ro.hist.brightness.threshold=5

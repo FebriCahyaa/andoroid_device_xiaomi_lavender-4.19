@@ -1,30 +1,56 @@
 #
-# Copyright (C) 2018 The LineageOS Project
+# Copyright (C) 2018 The Xiaomi-SDM660 Project
 #
 # SPDX-License-Identifier: Apache-2.0
 #
 
 LOCAL_PATH := $(call my-dir)
 
-ifneq ($(filter jasmine_sprout jason lavender platina tulip wayne whyred,$(TARGET_DEVICE)),)
+ifeq ($(TARGET_DEVICE),lavender)
+  subdir_makefiles=$(call first-makefiles-under,$(LOCAL_PATH))
+  $(foreach mk,$(subdir_makefiles),$(info including $(mk) ...)$(eval include $(mk)))
+
+LPFLASH := $(HOST_OUT_EXECUTABLES)/lpflash$(HOST_EXECUTABLE_SUFFIX)
+INSTALLED_SUPERIMAGE_DUMMY_TARGET := $(PRODUCT_OUT)/super_dummy.img
+
+$(INSTALLED_SUPERIMAGE_DUMMY_TARGET): $(PRODUCT_OUT)/super_empty.img $(LPFLASH)
+	$(call pretty,"Target dummy super image: $@")
+	$(hide) touch $@
+	$(hide) $(LPFLASH) $@ $(PRODUCT_OUT)/super_empty.img
+
+.PHONY: super_dummyimage
+super_dummyimage: $(INSTALLED_SUPERIMAGE_DUMMY_TARGET)
+
+INSTALLED_RADIOIMAGE_TARGET += $(INSTALLED_SUPERIMAGE_DUMMY_TARGET)
 
 include $(CLEAR_VARS)
 
-WCNSS_INI_SYMLINK := $(TARGET_OUT_VENDOR)/firmware/wlan/qca_cld/WCNSS_qcom_cfg.ini
-$(WCNSS_INI_SYMLINK): $(LOCAL_INSTALLED_MODULE)
-	@echo "WCNSS config ini link: $@"
-	@mkdir -p $(dir $@)
-	@rm -rf $@
-	$(hide) ln -sf /vendor/etc/wifi/$(notdir $@) $@
+LOCAL_MODULE := wifi_symlinks
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := FAKE
+LOCAL_MODULE_SUFFIX := -timestamp
 
-WCNSS_MAC_SYMLINK := $(TARGET_OUT_VENDOR)/firmware/wlan/qca_cld/wlan_mac.bin
-$(WCNSS_MAC_SYMLINK): $(LOCAL_INSTALLED_MODULE)
-	@echo "WCNSS MAC bin link: $@"
-	@mkdir -p $(dir $@)
-	@rm -rf $@
-	$(hide) ln -sf /mnt/vendor/persist/$(notdir $@) $@
+include $(BUILD_SYSTEM)/base_rules.mk
 
-ALL_DEFAULT_INSTALLED_MODULES += $(WCNSS_INI_SYMLINK) $(WCNSS_MAC_SYMLINK)
+$(LOCAL_BUILT_MODULE): ACTUAL_INI_FILE := /vendor/etc/wifi/WCNSS_qcom_cfg.ini
+$(LOCAL_BUILT_MODULE): WCNSS_INI_SYMLINK := $(TARGET_OUT_VENDOR)/firmware/wlan/qca_cld/WCNSS_qcom_cfg.ini
+
+WLAN_MAC_FW_PATH ?= /mnt/vendor/persist/wlan_mac.bin
+$(LOCAL_BUILT_MODULE): ACTUAL_BIN_FILE := $(WLAN_MAC_FW_PATH)
+
+$(LOCAL_BUILT_MODULE): WCNSS_BIN_SYMLINK := $(TARGET_OUT_VENDOR)/firmware/wlan/qca_cld/wlan_mac.bin
+
+$(LOCAL_BUILT_MODULE): $(LOCAL_PATH)/Android.mk
+$(LOCAL_BUILT_MODULE):
+	$(hide) echo "Making symlinks for wifi"
+	$(hide) mkdir -p $(dir $@)
+	$(hide) mkdir -p $(dir $(WCNSS_INI_SYMLINK))
+	$(hide) rm -rf $@
+	$(hide) rm -rf $(WCNSS_INI_SYMLINK)
+	$(hide) ln -sf $(ACTUAL_INI_FILE) $(WCNSS_INI_SYMLINK)
+	$(hide) rm -rf $(WCNSS_BIN_SYMLINK)
+	$(hide) ln -sf $(ACTUAL_BIN_FILE) $(WCNSS_BIN_SYMLINK)
+	$(hide) touch $@
 
 # A/B builds require us to create the mount points at compile time.
 # Just creating it for all cases since it does not hurt.
@@ -45,6 +71,16 @@ $(DSP_MOUNT_POINT):
 	@mkdir -p $(TARGET_OUT_VENDOR)/dsp
 
 ALL_DEFAULT_INSTALLED_MODULES += $(FIRMWARE_MOUNT_POINT) $(BT_FIRMWARE_MOUNT_POINT) $(DSP_MOUNT_POINT)
+
+IMS_LIBS := libimscamera_jni.so libimsmedia_jni.so
+IMS_SYMLINKS := $(addprefix $(TARGET_OUT_SYSTEM_EXT_APPS_PRIVILEGED)/ims/lib/arm64/,$(notdir $(IMS_LIBS)))
+$(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "IMS lib link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /system/system_ext/lib64/$(notdir $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(IMS_SYMLINKS)
 
 RFS_MSM_ADSP_SYMLINKS := $(TARGET_OUT_VENDOR)/rfs/msm/adsp/
 $(RFS_MSM_ADSP_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
@@ -87,30 +123,37 @@ ALL_DEFAULT_INSTALLED_MODULES += \
     $(RFS_MSM_MPSS_SYMLINKS) \
     $(RFS_MSM_SLPI_SYMLINKS)
 
-EGL_SYMLINK := $(TARGET_OUT_VENDOR)/lib/libGLESv2_adreno.so
-$(EGL_SYMLINK): $(LOCAL_INSTALLED_MODULE)
-	@mkdir -p $(dir $@)
-	$(hide) ln -sf egl/$(notdir $@) $@
+EGL_LIBRARIES := \
+	libEGL_adreno.so \
+	libGLESv2_adreno.so \
+	libq3dtools_adreno.so
 
-ALL_DEFAULT_INSTALLED_MODULES += $(EGL_SYMLINK)
-
-IMS_LIBS := libimscamera_jni.so libimsmedia_jni.so
-IMS_SYMLINKS := $(addprefix $(TARGET_OUT_SYSTEM_EXT_APPS_PRIVILEGED)/ims/lib/arm64/,$(notdir $(IMS_LIBS)))
-$(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
-	@echo "IMS lib link: $@"
+EGL_32_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR)/lib/,$(notdir $(EGL_LIBRARIES)))
+$(EGL_32_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "EGL 32 lib link: $@"
 	@mkdir -p $(dir $@)
 	@rm -rf $@
-	$(hide) ln -sf /system_ext/lib64/$(notdir $@) $@
+	$(hide) ln -sf egl/$(notdir $@) $@
 
-ALL_DEFAULT_INSTALLED_MODULES += $(IMS_SYMLINKS)
+EGL_64_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR)/lib64/,$(notdir $(EGL_LIBRARIES)))
+$(EGL_64_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "EGL lib link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf egl/$(notdir $@) $@
 
-METADATA_SYMLINK := $(TARGET_ROOT_OUT)/metadata
-$(METADATA_SYMLINK): $(LOCAL_INSTALLED_MODULE)
+ALL_DEFAULT_INSTALLED_MODULES += \
+	$(EGL_32_SYMLINKS) \
+	$(EGL_64_SYMLINKS)
+
+METADATA_SYMLINKS := $(TARGET_ROOT_OUT)/metadata
+$(METADATA_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	@echo "Creating $@"
 	@mkdir -p $(TARGET_ROOT_OUT)/metadata
-	$(hide) ln -sf /data/vendor/metadata_apex $@/apex
+	$(hide) ln -sf /data/apex $@/apex
 
-ALL_DEFAULT_INSTALLED_MODULES += $(METADATA_SYMLINK)
+ALL_DEFAULT_INSTALLED_MODULES += $(METADATA_SYMLINKS)
 
-include $(call all-makefiles-under,$(LOCAL_PATH))
+subdir_makefiles=$(call first-makefiles-under,$(LOCAL_PATH))
+$(foreach mk,$(subdir_makefiles),$(info including $(mk) ...)$(eval include $(mk)))
 endif

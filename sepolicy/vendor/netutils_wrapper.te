@@ -1,1 +1,1 @@
-allow netutils_wrapper proc_net:file{ getattr  read };
+dontaudit netutils_wrapper self:capability { sys_admin };
