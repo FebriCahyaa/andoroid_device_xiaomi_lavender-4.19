@@ -1058,27 +1058,32 @@ vendor/etc/init/android.hardware.keymaster@4.0-service-qti.rc|c8999fb1bccbef81e6
 vendor/lib/hw/keystore.sdm660.so
 vendor/lib64/hw/keystore.sdm660.so
 
-# Sensors - from Honeywell/hon660/hon660:12/94.00.03/0037:user/release-keys
--system_ext/framework/vendor.qti.hardware.sensorscalibrate-V1.0-java.jar|476196a495be445ab56745461e08c5f95cce0da6
-system_ext/lib/vendor.qti.hardware.sensorscalibrate@1.0.so|7c3431524dcc03b1bf011cdddfa428b1a58a0617
-system_ext/lib64/vendor.qti.hardware.sensorscalibrate@1.0.so|6e5297465a8391eba19476fd582165d53f0d132c
-vendor/bin/sensors.qti|5a036a4eaae482dd52e0535df68f9c5c5ffe274a
-vendor/lib/libsensor1.so|32b0239dac99701a96c361b6871bdd7a1f8cc29f
-vendor/lib/libsensor_reg.so|287a4774e7861f884c78ebcf4174bb04ca94aff6
-vendor/lib/libssc_default_listener.so|21a5b946f78605a1e5d49b34e79a69f3aeb350dd
-vendor/lib/sensor_calibrate.so|37be808f1ef472e24cdc5836ce6d68e7720131f6
-vendor/lib/sensors.ssc.so|786eccadc9e1f29568c58575ef61e760a41a499b
-vendor/lib64/libsensor1.so|821460aa9e9b4004f83917d699f562b4578c37cd
-vendor/lib64/libsensor_reg.so|60d6e47b01d2c097ec7ffab08f01333083f72c53
-vendor/lib64/libssc_default_listener.so|2c242c49c601088e3a403ab56c60b841938811c8
-vendor/lib64/sensor_calibrate.so|f3e7652f8821710ffc301c8e6f886a76d0a036b0
-vendor/lib64/sensors.ssc.so|214263957659adc0a9e5069d0b50245c850600dd
+# Sensors
+vendor/bin/sensors.qti
+vendor/etc/sensors/hals.conf|2be83209bb5319b4a3c75338c24852f89ddc1df7
+vendor/etc/sensors/sensor_def_qcomdev.conf
+vendor/lib/hw/activity_recognition.sdm660.so
+vendor/lib/libsensor1.so
+vendor/lib/libsensor_reg.so
+vendor/lib64/hw/activity_recognition.sdm660.so
+vendor/lib64/libsensor1.so
+vendor/lib64/libsensor_reg.so
+vendor/lib64/sensors.elliptic.so
 
-# Thermal - from Honeywell/hon660/hon660:12/94.00.03/0037:user/release-keys
-vendor/bin/thermal-engine|d58d0a84373658e230032d437e35e3bf3db92c8c
-vendor/etc/init/init_thermal-engine.rc|a0310f09da9f09c67e110607b73aec9f9f981c4c
--vendor/lib/libthermalclient.so|2225ccc5e21c889778591a5d42774ab54a54de88
--vendor/lib64/libthermalclient.so|40978729e458ec49fabf457375e90ceb081d1ad8
+# Sensors - from PL2_sprout-user 10 QKQ1.190828.002 00WW_4_150
+vendor/lib/sensors.ssc.so|bee13b2ad7f1ef0d2cf63708fa38ad76877ea287
+vendor/lib64/sensors.ssc.so|42577aa881baa287ec037c0e59972ad0e0358b08
+
+# Thermal
+vendor/bin/thermal-engine
+vendor/etc/thermal-engine-camera.conf
+vendor/etc/thermal-engine-map.conf
+vendor/etc/thermal-engine-normal.conf
+vendor/etc/thermal-engine.conf
+-vendor/lib/libthermalclient.so
+-vendor/lib64/libthermalclient.so
+vendor/lib64/libthermalfeature.so
+vendor/lib64/libthermalioctl.so
 
 # Wifi - from Honeywell/hon660/hon660:12/94.00.03/0037:user/release-keys
 vendor/bin/cnss-daemon|60f5ddae32675b6f4587f5fc07c1cf0d23fa8611
